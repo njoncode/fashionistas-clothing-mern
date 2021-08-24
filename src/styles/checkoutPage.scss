@@ -1,0 +1,43 @@
+table {
+  margin-top: 50px;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-size: 18px;
+}
+
+th {
+  height: 50px;
+}
+
+tr {
+  text-align: center;
+}
+
+.image {
+  width: 200px;
+  height: 200px;
+}
+
+.price-content {
+  font-weight: bolder;
+}
+
+.total-price {
+  font-size: 28px;
+  text-align: center;
+}
+
+.arrow-left {
+  padding-right: 8px;
+}
+
+.arrow-right {
+  padding-left: 8px;
+}

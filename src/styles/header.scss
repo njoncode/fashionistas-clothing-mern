@@ -1,0 +1,26 @@
+.header {
+  height: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // position: fixed;
+  // z-index: 1;
+}
+
+.options {
+  width: 50%;
+  height: 100px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.option {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 1000;
+  text-decoration: none;
+  color: grey;
+}
