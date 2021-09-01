@@ -3,27 +3,26 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import '../styles/collectionPage.scss';
-import { selectCollections } from '../redux/shop/shopSelector';
+import { selectCollection } from '../redux/shop/shopSelector';
 import CollectionItem from './CollectionItem';
 
 
-const CollectionPage = ({collections, match}) => {
-    // console.log('Collections: ', collections)
-    // console.log('match: CategoryPage ', match)
-    const collectionCategory = collections.find(collection => (collection.routeName) === match.params.collectionId)
-    // console.log('collectionCategory: ', collectionCategory)
+const CollectionPage = ({ collection }) => {
+
+    const { title, items } = collection;
+
     return (
         <div className='collection-page'>
-            <h2 className='title'>{collectionCategory.title}</h2>
+            <h2 className='title'>{title}</h2>
             <div className='items'>
-            {collectionCategory.items.map(collectionCategoryItem => <CollectionItem item={collectionCategoryItem}/>)}
+            {items.map(item => <CollectionItem key={item.id} item={item}/>)}
             </div>
         </div>
     )
 }
 
-const mapStateToProps = createStructuredSelector({
-    collections: selectCollections 
+const mapStateToProps = (state, ownProps) => ({
+    collection: selectCollection(ownProps.match.params.collectionId)(state)
 })
 
 export default connect(mapStateToProps)(CollectionPage);

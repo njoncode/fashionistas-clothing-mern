@@ -1,6 +1,4 @@
 export const addItemToCart = (cartItems, cartItemToAdd) => {
-    // console.log('cartItems: ', cartItems)
-    // console.log('cartItemToAdd: ', cartItemToAdd)
     const existingCartItem = cartItems.filter(item => item.name === cartItemToAdd.name)
     console.log('existing is: ', existingCartItem)
     if(existingCartItem.length){
