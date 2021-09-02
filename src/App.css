@@ -3,6 +3,21 @@ body {
   padding: 20px 80px;
 }
 
+/* 
+ Event though we have a Link component in Header component. 
+ react-router-dom modifies that to <a/> tag and then gives it the functionality inside of itself to do the behaviour.
+
+ We could just target selectively the link itself inside of Header component by targeting say anything with the className of option.
+ But we wanted so that that none of our <a> tags actually have this text decoration.
+ because we will probably never use a native <a> tag.
+ 
+ */
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
 * {
   box-sizing: border-box;
 }

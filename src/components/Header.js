@@ -3,19 +3,21 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
  import { createStructuredSelector } from 'reselect';
 
-import { FaShoppingCart, FaShopify } from 'react-icons/fa';
 import '../styles/header.scss'
-import { auth } from '../firebase/firebaseUtils';
 
+import {ReactComponent as Logo} from '../assets/crown.svg'
+import { auth } from '../firebase/firebaseUtils';
 import CartIcon from './CartIcon';
-import '../assets/shoppingBag.svg';
 import CartDropdown from './CartDropdown';
 import { selectCartHidden } from '../redux/cart/cartSelectors';
 import { selectCurrentUser } from '../redux/user/userSelector';
 
+
 const Header = ({ currentUser, hidden }) => (
    <div className='header'>
-    <Link className='option' to='/'><FaShopify color="grey" size={30}/></Link>
+       <Link className='logo-container' to='/'>
+           <Logo className='logo' />
+       </Link>
     <div className='options'>
         <Link className='option' to='/shop'>SHOP</Link>
         <Link className='option' to='/contact'>CONTACT</Link>
