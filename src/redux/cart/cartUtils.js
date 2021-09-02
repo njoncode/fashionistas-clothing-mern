@@ -21,15 +21,19 @@ export const clearItemFromCart = (cartItems, cartItemToRemove) => {
 
 
 export const removeItemFromCart = (cartItems, cartItemToRemove) => {
-    return cartItems.map(cartItem => {
-        if(cartItem.name === cartItemToRemove.name) {
-            return ({
-                ...cartItem,
-                quantity: cartItem.quantity - 1
-            }) 
-        } else return cartItem
-    })
-}
+        // Check if the cartItem to be removed (cartItemToRemove) is in the cartItems
+        const existingCartItem = cartItems.find(cartItem => cartItem.id === cartItemToRemove.id)
+        
+        if(existingCartItem.quantity === 1 ) {
+            return cartItems.filter(cartItem => cartItem.id !== cartItemToRemove.id)
+        }
+    
+        return cartItems.map(cartItem => 
+            cartItem.id === cartItemToRemove.id
+            ? { ...cartItem, quantity: cartItem.quantity - 1 }
+            : cartItem
+        );
+    };
 
 
 
