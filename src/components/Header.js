@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { connect } from 'react-redux'
- import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
- import { HeaderContainer, LogoContainer, Options, OptionLink } from '../styles/header.styles';
-import '../styles/header.scss'
+import { HeaderContainer, LogoContainer, Options, OptionLink } from '../styles/header.styles';
 
 import {ReactComponent as Logo} from '../assets/crown.svg'
 import { auth } from '../firebase/firebaseUtils';
