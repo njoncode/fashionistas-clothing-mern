@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
 import { connect } from 'react-redux'
  import { createStructuredSelector } from 'reselect';
 
- import { HeaderContainer, LogoContainer, Options, OptionLink, OptionDiv } from '../styles/header.styles';
+ import { HeaderContainer, LogoContainer, Options, OptionLink } from '../styles/header.styles';
 import '../styles/header.scss'
 
 import {ReactComponent as Logo} from '../assets/crown.svg'
@@ -21,13 +21,13 @@ const Header = ({ currentUser, hidden }) => (
        </LogoContainer>
     <Options>
         <OptionLink className='option' to='/shop'>SHOP</OptionLink>
-        <Link className='option' to='/contact'>CONTACT</Link>
+        <OptionLink className='option' to='/contact'>CONTACT</OptionLink>
         <CartIcon/>
         {
              currentUser ?
-             <OptionDiv onClick={() => auth.signOut()}>SIGN OUT</OptionDiv>
+             <OptionLink as='div' onClick={() => auth.signOut()}>SIGN OUT</OptionLink>
              :
-             <Link className='option' to='/signin'>SIGN IN</Link>
+             <OptionLink className='option' to='/signin'>SIGN IN</OptionLink>
         }
     </Options>
     {hidden ? null : <CartDropdown />}

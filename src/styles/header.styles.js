@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 /**
@@ -6,10 +6,6 @@ import { Link } from 'react-router-dom';
  * And this allows us to write css blocks that we can just include into our styles & we will get that css almost like a shared function. 
  */
 
-const OptionContainerStyles = css`
-    padding: 10px 15px;
-    cursor: pointer;
-`
 
 export const HeaderContainer = styled.div`
     height: 70px;
@@ -36,9 +32,6 @@ export const Options = styled.div`
 `; 
 
 export const OptionLink = styled(Link)`
-    ${OptionContainerStyles}
- ` 
-
-export const OptionDiv = styled.div`
-    ${OptionContainerStyles}
-` 
+    padding: 10px 15px;
+    cursor: pointer;
+`;
