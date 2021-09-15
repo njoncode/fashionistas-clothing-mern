@@ -16,9 +16,13 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   if(!userAuth) return;
 
  const userRef = firestore.doc(`users/${userAuth.uid}`);
- const snapShot = await userRef.get();
+ console.log('userRef: ', userRef);
+
+ const snapShot = await userRef.get(); 
+ console.log('snapShot: ', snapShot); 
  
- if(!snapShot.exists) {
+ // If document exists
+ if(!snapShot.exists) {  
     const { displayName, email } = userAuth;
     const createdAt = new Date();
 
@@ -35,6 +39,39 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
  }
   return userRef;
 }
+
+export const addCollectionAndItems = async (collectionKey, objectsToAdd) => {
+  const collectionRef = firestore.collection(collectionKey);
+  console.log('collectionRef: ', collectionRef)
+
+  const batch = firestore.batch();
+  objectsToAdd.forEach(obj => {
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, obj)
+  });
+
+  return await batch.commit();
+}
+
+// This function is gonna get the whole snapshot & convert the array into an object and we will add route property to the object
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const transformedCollection = collections.docs.map(doc => {
+    const { title, items } = doc.data();   // doc.data gets the data of the snapshot 
+
+    return {
+      routeName:  (title.toLowerCase()),   // The encodeURI is used to encode a URI by replacing each instance of certain characters by one, two or three escape sequences representing the UTF-8 encoding of the character. 
+      id: doc.id,
+      title,
+      items
+    }
+  });
+
+  return transformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] =  collection;
+    return accumulator;
+  }, {});
+
+}; 
 
 // Initialize Firebase
 firebase.initializeApp(config);

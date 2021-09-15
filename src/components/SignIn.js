@@ -5,28 +5,30 @@ import CustomButton from './CustomButton';
 import {auth, signInWithGoogle} from '../firebase/firebaseUtils';
 
 class SignIn extends React.Component {
-    constructor() { 
-        super();
+    constructor(props) { 
+        super(props);
 
         this.state = {
             email: '',
             password: ''
-        }   
+        }
     }
 
-    handleOnChange = e => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+    handleOnChange = event => {
+
+        const {value, name} = event.target;
+
+        this.setState({ [name]: value })
     }
 
-    handleSubmit = async e => {
-        e.preventDefault();
+    handleSubmit = async event => {
+        event.preventDefault();
  
         const { email, password } = this.state;
         
         try{
             await auth.signInWithEmailAndPassword(email, password);
+            // if succeed clear the current state
             this.setState({ email: '', password: ''})
         } catch (error) {
             console.log(error);
@@ -58,7 +60,7 @@ class SignIn extends React.Component {
                 />
                 <div className='buttons'>
                     <CustomButton type='submit'>Sign in</CustomButton >
-                    <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+                    <CustomButton type="button" onClick={signInWithGoogle} isGoogleSignIn>
                         Sign in with Google
                     </CustomButton>
                 </div>
@@ -68,4 +70,15 @@ class SignIn extends React.Component {
     }
 }
 
-export default SignIn;
+export default SignIn; 
+
+/**
+ If we see that our sign in with google button causes the email and password fields to trigger asking the user to fill these in, 
+ we simply add the property type="button" to our google sign in button!
+ The reason this happens is because any buttons inside of a form element will cause the form to treat the button as type="submit" by default. 
+ We don't want that for our google sign in button though, so we just make sure to add type="button" to our google sign in CustomButton.
+
+    <CustomButton type="button" onClick={signInWithGoogle} isGoogleSignIn>
+        Sign in with Google
+    </CustomButton>
+ */

@@ -14,43 +14,40 @@ import { setCurrentUserAction} from './redux/user/userActions';
 import { selectCurrentUser }  from './redux/user/userSelector';
 import { createStructuredSelector } from 'reselect';
 
+
 import CheckoutPage from './components/CheckoutPage';
 
 class App extends React.Component {
 
-  unsubscribeFromAuth = null
+unsubscribeFromAuth = null;
 
+  // To know the status of user logged in
   componentDidMount() {
-
-    console.log('this.props: ', this.props)
-
-    const {setCurrentUser} = this.props
+    const { setCurrentUser } = this.props;
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if(userAuth) {
-        const userRef= await createUserProfileDocument(userAuth);
+      // check if the user is signed in
+      if (userAuth) {
+        // if there is a document
+        const userRef = await createUserProfileDocument(userAuth);
 
-        userRef.onSnapshot(snapshot => {
+        userRef.onSnapshot(snapShot => {
           setCurrentUser({
-            currentUser: {
-              id: snapshot.id,
-              ...snapshot.data()
-            }
-          }, () => {
-            console.log(this.state)
-          })
+            id: snapShot.id,
+            ...snapShot.data()
+          });
         });
-      } else {
-        setCurrentUser(userAuth);
-        console.log(this.state)
       }
-  });
-}
+      // if the user logs out, set currentUser to null
+      setCurrentUser(userAuth);
+    });
+  }
 
+  // To close the OAuth connection when we unmount our component
   componentWillUnmount() {
     this.unsubscribeFromAuth();
   }
-   
+  
   render() {
     return (
       <div> 
@@ -67,8 +64,8 @@ class App extends React.Component {
   }
   }
 
-  const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser
+  const mapStateToProps = createStructuredSelector ({
+    currentUser: selectCurrentUser,
   });
 
   const mapDispatchToProps = dispatch => ({

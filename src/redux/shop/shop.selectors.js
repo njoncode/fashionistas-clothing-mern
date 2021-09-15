@@ -9,7 +9,7 @@ export const selectCollections = createSelector(
 
 export const selectCollectionsForPreview = createSelector(
     [selectCollections],
-    collections => Object.keys(collections).map(key => collections[key])   
+    collections => collections ? Object.keys(collections).map(key => collections[key]) : []  
     // Converting collections object into an array so that we could map through it in CollectionsOverview Component.
 );
 
@@ -17,7 +17,7 @@ export const selectCollectionsForPreview = createSelector(
 export const selectCollection = collectionUrlParam => 
     createSelector(
         [selectCollections],
-        collections => collections[collectionUrlParam]
+        collections => (collections ? collections[collectionUrlParam] : null)
     );
 
 
