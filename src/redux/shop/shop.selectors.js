@@ -21,6 +21,13 @@ export const selectCollection = collectionUrlParam =>
     );
 
 
+export const selectIsCollectionFetching = createSelector(
+    [selectShop],
+    shop =>  shop.isFetching
+);
+    
+
+
 /**
  * ownProps gives us all of the props that we are getting on our collectionPage component,
    including our match object that we get from the route component that is passing our collection on our shopPage.
