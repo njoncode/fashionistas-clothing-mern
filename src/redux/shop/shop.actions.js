@@ -17,23 +17,22 @@ export const fetchCollectionsFailure = errorMessage => ({
     payload: errorMessage
 })
 
-export const fetchCollectionsStartAsync = () => {
-    // We are able to dispatch because of redux-think library.
-    return dispatch => {
-        const collectionRef = firestore.collection('collections');
-        dispatch(fetchCollectionsStart());
+// export const fetchCollectionsStartAsync = () => {
+//     // We are able to dispatch because of redux-think library.
+//     return dispatch => {
+//         const collectionRef = firestore.collection('collections');
+//         dispatch(fetchCollectionsStart());
 
-        // .get makes an api call to fetch back the data associated to this collectionRef.
-        collectionRef
-            .get()
-            .then(snapshot => {
-                const collectionsMap = convertCollectionsSnapshotToMap(snapshot); 
-                dispatch(fetchCollectionsSuccess(collectionsMap));
-        })
-            .catch(error =>  dispatch(fetchCollectionsFailure(error.message)));
-    };
-};
-
+//         // .get makes an api call to fetch back the data associated to this collectionRef.
+//         collectionRef
+//             .get()
+//             .then(snapshot => {
+//                 const collectionsMap = convertCollectionsSnapshotToMap(snapshot); 
+//                 dispatch(fetchCollectionsSuccess(collectionsMap));
+//         })
+//             .catch(error =>  dispatch(fetchCollectionsFailure(error.message)));
+//     };
+// };
 
 
 /**
