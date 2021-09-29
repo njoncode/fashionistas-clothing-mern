@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import '../styles/signIn.scss';
+
 import FormInput from './FormInput';
 import CustomButton from './CustomButton';
 import {auth, signInWithGoogle} from '../firebase/firebaseUtils';
-
+import { googleSignInStartAction } from '../redux/user/user.actions';
 class SignIn extends React.Component {
     constructor(props) { 
         super(props);
@@ -36,6 +39,8 @@ class SignIn extends React.Component {
     }
 
     render() {
+        const { googleSignInStartDispatch } = this.props;
+
         return (
             <div className='sign-in'>
             <h2>I already have an account</h2>
@@ -60,17 +65,25 @@ class SignIn extends React.Component {
                 />
                 <div className='buttons'>
                     <CustomButton type='submit'>Sign in</CustomButton >
-                    <CustomButton type="button" onClick={signInWithGoogle} isGoogleSignIn>
+                    <CustomButton 
+                        type='button' 
+                        onClick={googleSignInStartDispatch} 
+                        isGoogleSignIn
+                    >
                         Sign in with Google
                     </CustomButton>
-                </div>
+                </div>¯
             </form>
         </div>
         )
     }
-}
+};
 
-export default SignIn; 
+const mapDispatchToProps = dispatch => ({
+    googleSignInStartDispatch: () => dispatch(googleSignInStartAction())
+})
+
+export default connect(null, mapDispatchToProps)(SignIn); 
 
 /**
  If we see that our sign in with google button causes the email and password fields to trigger asking the user to fill these in, 
@@ -82,3 +95,17 @@ export default SignIn;
         Sign in with Google
     </CustomButton>
  */
+
+
+/**
+
+ *  <CustomButton type='button' onClick={signInWithGoogle} isGoogleSignIn>
+        Sign in with Google
+    </CustomButton>
+ 
+    If we don't put type='button' on CustomButton, then when we click on "Sign in with Google" button, this form will just trigger an onSubmit just because this button is also part of the form element.
+    It's just the nature of what we have to do with buttons. Even if we have the type submit in the first button and the second button doesn't have the type='submit', this will unfortunately still trigger a signin.
+
+    By doing type='button', our button now no longer will trigger the submit form.
+
+    */

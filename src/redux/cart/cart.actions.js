@@ -1,4 +1,4 @@
-import cartConstants from "./cartConstants";
+import cartConstants from "./cart.constants";
 
 export const toggleCartHiddenAction = () => ({
     type: cartConstants.TOGGLE_CART_HIDDEN

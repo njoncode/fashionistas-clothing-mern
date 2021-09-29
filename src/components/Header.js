@@ -9,7 +9,7 @@ import {ReactComponent as Logo} from '../assets/crown.svg'
 import { auth } from '../firebase/firebaseUtils';
 import CartIcon from './CartIcon';
 import CartDropdown from './CartDropdown';
-import { selectCartHidden } from '../redux/cart/cartSelectors';
+import { selectCartHidden } from '../redux/cart/cart.selectors';
 import { selectCurrentUser } from '../redux/user/userSelector';
 
 

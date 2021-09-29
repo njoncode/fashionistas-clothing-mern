@@ -1,4 +1,4 @@
-import cartConstants from './cartConstants';
+import cartConstants from './cart.constants';
 import { addItemToCart, clearItemFromCart, removeItemFromCart } from './cartUtils';
 
 const INITIAL_STATE = {

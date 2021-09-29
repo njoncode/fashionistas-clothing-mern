@@ -10,7 +10,7 @@ import ShopPage from './components/ShopPage';
 import Header from './components/Header';
 import SignInAndSignUp from './components/SignInAndSignUp';
 import { auth, createUserProfileDocument } from './firebase/firebaseUtils'
-import { setCurrentUserAction} from './redux/user/userActions';
+import { setCurrentUserAction} from './redux/user/user.actions';
 import { selectCurrentUser }  from './redux/user/userSelector';
 import { createStructuredSelector } from 'reselect';
 
@@ -25,22 +25,23 @@ unsubscribeFromAuth = null;
   componentDidMount() {
     const { setCurrentUser } = this.props;
 
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      // check if the user is signed in
-      if (userAuth) {
-        // if there is a document
-        const userRef = await createUserProfileDocument(userAuth);
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+    //   // check if the user is signed in
+    //   if (userAuth) {
+    //     // if there is a document
+    //     const userRef = await createUserProfileDocument(userAuth);
 
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data()
-          });
-        });
-      }
-      // if the user logs out, set currentUser to null
-      setCurrentUser(userAuth);
-    });
+    //     userRef.onSnapshot(snapShot => {
+    //       setCurrentUser({
+    //         id: snapShot.id,
+    //         ...snapShot.data()
+    //       });
+    //     });
+    //   }
+    //   // if the user logs out, set currentUser to null
+    //   setCurrentUser(userAuth);
+    // });
+
   }
 
   // To close the OAuth connection when we unmount our component
