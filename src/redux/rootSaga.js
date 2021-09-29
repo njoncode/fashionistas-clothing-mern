@@ -23,3 +23,17 @@ export default function* rootSaga () {
     Without all, our app will still work, but WatcherSaga2 would wait for WatcherSaga to finish before it started. With all(), they will both start at the same time. 
 
 */ 
+
+/**
+ * 
+ * The rootSaga generator function. This function uses another helper effect all. This effect tells redux-saga to run the functions in parallel.
+
+    export default function* rootSaga () {
+        yield all([call(fetchCollectionsStart), call(userSagas)]);
+    };
+
+ * The rootSaga function runs the watcher sagas in parallel, so it can be exported and ran by the saga middleware. Basically, it connects the sagas to the redux-saga middleware.
+    sagaMiddleware.run(rootSaga);
+	
+    Above is a line of code in the store.js file that runs the saga.
+ */
