@@ -23,4 +23,18 @@ export const checkUserSessionAction = () => ({
     type: userConstants.CHECK_USER_SESSION
 });
 
+export const signOutStartAction = () => ({
+    type: userConstants.SIGN_OUT_START,
+});
+
+export const signOutSuccessAction = () => ({
+    type: userConstants.SIGN_OUT_SUCCESS,
+});
+
+export const signOutFailureAction = error => ({
+    type: userConstants.SIGN_OUT_FAILURE,
+    payload: error
+});
+
+
 

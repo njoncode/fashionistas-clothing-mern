@@ -11,9 +11,11 @@ import CartIcon from './CartIcon';
 import CartDropdown from './CartDropdown';
 import { selectCartHidden } from '../redux/cart/cart.selectors';
 import { selectCurrentUser } from '../redux/user/userSelector';
+import { signOutStartAction } from '../redux/user/user.actions';
 
 
-const Header = ({ currentUser, hidden }) => (
+const Header = ({ currentUser, hidden, signOutStartDispatch }) => (
+
    <HeaderContainer>
        <LogoContainer to='/'>
            <Logo className='logo' />
@@ -24,7 +26,7 @@ const Header = ({ currentUser, hidden }) => (
         <CartIcon/>
         {
              currentUser ?
-             <OptionLink as='div' onClick={() => auth.signOut()}>SIGN OUT</OptionLink>
+             <OptionLink as='div' onClick={signOutStartDispatch}>SIGN OUT</OptionLink>
              :
              <OptionLink className='option' to='/signin'>SIGN IN</OptionLink>
         }
@@ -38,7 +40,11 @@ const mapStatetoProps = createStructuredSelector({
     hidden: selectCartHidden
 })
 
-export default connect(mapStatetoProps)(Header);
+
+const mapDispatchToProps = dispatch => ({
+    signOutStartDispatch: () => dispatch(signOutStartAction())
+})
+export default connect(mapStatetoProps, mapDispatchToProps)(Header);
 
 
 
