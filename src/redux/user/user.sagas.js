@@ -3,32 +3,34 @@ import { takeLatest, put, all, call } from 'redux-saga/effects';
 import { auth, googleProvider, createUserProfileDocument } from '../../firebase/firebaseUtils';
 
 import userConstants from './user.constants';
-import  { googleSignInSuccessAction, googleSignInFailureAction, emailSignInSuccessAction, emailSignInFailureAction } from './user.actions';
+import  { signInSuccessAction, signInFailureAction } from './user.actions';
 
+
+export function* getSnapshotFromUserAuth(userAuth) {
+    try {
+        const userRef = yield call(createUserProfileDocument, userAuth);
+        const userSnapshot = yield userRef.get();
+        yield put(signInSuccessAction({ id: userSnapshot.id, ...userSnapshot.data() }));
+    } catch (error) {
+        yield put(signInFailureAction(error));
+    }
+};
 
 export function* signInWithGoogle() {
     try {
         const { user } = yield auth.signInWithPopup(googleProvider);
-        const userRef = yield call(createUserProfileDocument, user);
-        const userSnapshot = yield userRef.get();
-        yield put(
-            googleSignInSuccessAction({ id: userSnapshot.id, ...userSnapshot.data() })
-        );
-    } catch (error) {
-        yield put(googleSignInFailureAction(error));
+        yield getSnapshotFromUserAuth(user);
+    } catch (error) { 
+        yield put(signInFailureAction(error));
     }
 };
 
 export function* signInWithEmail({ payload: { email, password }}) {
     try {
         const { user } = yield auth.signInWithEmailAndPassword(email, password)
-        const userRef = yield call(createUserProfileDocument, user);
-        const userSnapshot = yield userRef.get();
-        yield put(
-            emailSignInSuccessAction({ id: userSnapshot.id, ...userSnapshot.data() })
-        );
+        yield getSnapshotFromUserAuth(user);
     } catch (error) {
-        yield put(emailSignInFailureAction(error));
+        yield put(signInFailureAction(error));
     }
 };
 
@@ -53,9 +55,9 @@ export function* userSagas() {
 /**
  *  put():  puts things back into our regular Redux flow.
 
- *  yield put(emailSignInFailureAction(error));
+ *  yield put(signInFailureAction(error));
     put is another effect provided by redux-saga which can be used to dispatch actions in a saga. 
-    So this instructs the middleware to dispatch an action emailSignInFailureAction to the store.
+    So this instructs the middleware to dispatch an action signInFailureAction to the store.
  
  */
 
@@ -158,16 +160,16 @@ So what the line above does is call the createUserProfileDocument async function
 
 * If the promise was successful, execution of the saga resumes to the next line:
 
-    yield put(googleSignInSuccessAction({ id: userSnapshot.id, ...userSnapshot.data() }) );
+    yield put(signInSuccessAction({ id: userSnapshot.id, ...userSnapshot.data() }) );
 
 
-put is another helper effect which is used to dispatch an action to the redux store. The line above dispatches a googleSignInSuccessAction() action with the ({ id: userSnapshot.id, ...userSnapshot.data() }) as an argument, so the reducer can update the store state.
+put is another helper effect which is used to dispatch an action to the redux store. The line above dispatches a signInSuccessAction() action with the ({ id: userSnapshot.id, ...userSnapshot.data() }) as an argument, so the reducer can update the store state.
 
 
 * If the promise failed then execution continues in the catch block.
 
     catch (error) {
-            yield put(emailSignInFailureAction(error));
+            yield put(signInFailureAction(error));
     }
 
 This dispatches an action to the store to indicate the request failed.
