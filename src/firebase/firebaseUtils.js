@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import { putResolve } from '@redux-saga/core/effects';
 
 const config = {
     apiKey: "AIzaSyChsnAu5ABU7Yw_MrrW0j0FUHFXjGmTnok",
@@ -70,8 +71,16 @@ export const convertCollectionsSnapshotToMap = (collections) => {
     accumulator[collection.title.toLowerCase()] =  collection;
     return accumulator;
   }, {});
-
 }; 
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject)
+  })
+}
 
 // Initialize Firebase
 firebase.initializeApp(config);

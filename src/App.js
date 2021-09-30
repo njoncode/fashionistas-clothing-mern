@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import './App.css';
 
@@ -10,8 +11,7 @@ import Header from './components/Header';
 import SignInAndSignUp from './components/SignInAndSignUp';
 
 import { selectCurrentUser }  from './redux/user/userSelector';
-import { createStructuredSelector } from 'reselect';
-
+import { checkUserSessionAction } from './redux/user/user.actions';
 
 import CheckoutPage from './components/CheckoutPage';
 
@@ -20,24 +20,8 @@ class App extends React.Component {
 
   // To know the status of user logged in
   componentDidMount() {
-   
-    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-    //   // check if the user is signed in
-    //   if (userAuth) {
-    //     // if there is a document
-    //     const userRef = await createUserProfileDocument(userAuth);
-
-    //     userRef.onSnapshot(snapShot => {
-    //       setCurrentUser({
-    //         id: snapShot.id,
-    //         ...snapShot.data()
-    //       });
-    //     });
-    //   }
-    //   // if the user logs out, set currentUser to null
-    //   setCurrentUser(userAuth);
-    // });
-
+    const { checkUserSessionDispatch } = this.props;
+    checkUserSessionDispatch();
   }
 
   // To close the OAuth connection when we unmount our component
@@ -66,5 +50,9 @@ const mapStateToProps = createStructuredSelector ({
     currentUser: selectCurrentUser,
 });
 
+const mapDispatchToProps = dispatch => ({
+  checkUserSessionDispatch: () => dispatch(checkUserSessionAction())
+});
 
-export default connect(mapStateToProps)(App);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

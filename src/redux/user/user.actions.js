@@ -19,3 +19,8 @@ export const emailSignInStartAction = emailAndPassowrd => ({
     payload: emailAndPassowrd
 });
 
+export const checkUserSessionAction = () => ({
+    type: userConstants.CHECK_USER_SESSION
+});
+
+
