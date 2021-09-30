@@ -24,7 +24,9 @@ export function* fetchCollectionsStart() {
         shopConstants.FETCH_COLLECTIONS_START, 
         fetchCollectionsAsync
     );
-}
+};
+
+
 
 /**
  * Redux Saga is a middleware library used to allow a Redux store to interact with resources outside of itself asynchronously. This includes making HTTP requests to external services, accessing browser storage, and executing I/O operations.

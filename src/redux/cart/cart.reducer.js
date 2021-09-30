@@ -12,7 +12,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 hidden: !state.hidden
-            }
+            };
         case cartConstants.ADD_ITEM_TO_CART:
             return {
                 ...state,
@@ -22,12 +22,17 @@ const cartReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 cartItems: removeItemFromCart(state.cartItems, action.payload)
-            }
+            };
         case cartConstants.CLEAR_ITEM_FROM_CART:
             return {
                 ...state,
                 cartItems: clearItemFromCart(state.cartItems, action.payload)
-            }
+            };
+        case cartConstants.CLEAR_CART:
+            return {
+                ...state,
+                cartItems: [] 
+            };
         default:
             return state;
     }
