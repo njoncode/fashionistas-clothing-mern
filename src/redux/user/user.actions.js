@@ -14,9 +14,9 @@ export const signInFailureAction = error => ({
     payload: error
 });
 
-export const emailSignInStartAction = emailAndPassowrd => ({
+export const emailSignInStartAction = emailAndPassword => ({
     type: userConstants.EMAIL_SIGN_IN_START,
-    payload: emailAndPassowrd
+    payload: emailAndPassword
 });
 
 export const checkUserSessionAction = () => ({
@@ -35,6 +35,22 @@ export const signOutFailureAction = error => ({
     type: userConstants.SIGN_OUT_FAILURE,
     payload: error
 });
+
+export const signUpStartAction = (userCredentials) => ({
+    type: userConstants.SIGN_UP_START,
+    payload: userCredentials
+});
+
+export const signUpSuccessAction = ({ user, additionalData }) => ({
+    type: userConstants.SIGN_UP_SUCCESS,
+    payload: { user, additionalData }
+});
+ 
+export const signUpFailureAction = error => ({
+    type: userConstants.SIGN_UP_START_FAILURE,
+    payload: error
+});
+
 
 
 
